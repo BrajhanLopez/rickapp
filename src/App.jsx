@@ -1,43 +1,75 @@
-import { useState } from 'react'
-import logo from './logo.svg'
+import Location  from './components/Location'
+
 import './App.css'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+import ResidentInfo from './components/ResidentInfo'
+
+let obj = {
+  "id": 50,
+  "name": "Kyle's Teenyverse",
+  "type": "Teenyverse",
+  "dimension": "Replacement Dimension",
+  "residents": [
+    "https://rickandmortyapi.com/api/character/197",
+    "https://rickandmortyapi.com/api/character/364"
+  ],
+  "url": "https://rickandmortyapi.com/api/location/50",
+  "created": "2017-12-30T12:36:19.730Z"
+}
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [random, setrandom] = useState()
+   const [location, setlocation] =useState()
+
+  useEffect(()=>{
+    
+      axios.get('https://rickandmortyapi.com/api/location/')
+      .then(res => setrandom(Math.floor(Math.random()*(res.data.info.count)+1)))
+      .catch(e => console.log(e))
+    
+  
+  },[])
+
+  useEffect(()=>{
+
+if (random) {
+  axios.get(`https://rickandmortyapi.com/api/location/${random}`)
+  .then(res => setlocation(res.data))
+}
+
+  },[random])
+
+console.log(location);
+
+
+
+
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.jsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
+      <div className="header">
+      <input className='text1'  type="text" placeholder='type a location id'/>  
+      <button className='search'>Buscar</button>
+      </div>
+
+      <div className="main">
+      <Location datalocation={location}/>
+      <br />
+      <div className='container-list'>
+      {
+        location?.residents.map(url=>{
+          return <ResidentInfo url={url} key={url} />
+        })
+
+      }
+      </div>
+
+      
+      </div>
+      
+     
+     
     </div>
   )
 }

@@ -62,6 +62,7 @@ h3 {
   top: 170px;
   height: 30px;
   width: 400px;
+  color: black;
   
 }
 
@@ -100,12 +101,23 @@ line-height: 30PX;
 
 .sta{
   display: inline-block;
-  background-color: chartreuse;
+  
   width: 10px;
   height: 10px;
   border-radius: 10px;
 }
 
+.green {
+  background-color: chartreuse;
+}
+
+.red {
+  background-color: red;
+}
+
+.unknow {
+  background-color: rgb(207, 208, 206);
+}
 .search {
   color: black;
   display: block;

@@ -21,6 +21,13 @@ let obj = {
 function App() {
   const [random, setrandom] = useState()
    const [location, setlocation] =useState()
+const [search, setsearch] = useState()
+
+
+const submit = e => {
+  setsearch(e.target.previousSibling.value);
+  e.target.previousSibling.value =""
+}
 
   useEffect(()=>{
     
@@ -33,12 +40,17 @@ function App() {
 
   useEffect(()=>{
 
-if (random) {
+if (random && !search) {
   axios.get(`https://rickandmortyapi.com/api/location/${random}`)
   .then(res => setlocation(res.data))
 }
+if (search) {
+  axios.get(`https://rickandmortyapi.com/api/location/${search}`)
+  .then(res => setlocation(res.data))
+}
 
-  },[random])
+
+  },[random, search])
 
 console.log(location);
 
@@ -46,12 +58,13 @@ console.log(location);
 
 
 
+
   return (
     <div className="App">
-      <div className="header">
+    <div className="header">
       <input className='text1'  type="text" placeholder='type a location id'/>  
-      <button className='search'>Buscar</button>
-      </div>
+      <button className='search' onClick={submit}>Buscar</button>
+    </div>
 
       <div className="main">
       <Location datalocation={location}/>

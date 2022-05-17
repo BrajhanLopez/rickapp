@@ -23,14 +23,28 @@ useEffect(()=> {
             
             <ul className='ul'>
             <li className='li'> <img src={residenti?.image} alt="" /></li>
-            <div className='status'> <div className='sta' ></div>   {residenti?.status}  </div>
+           
+            {(()=> {
+           if (residenti?.status === 'Alive') {
+           return( <div className='status'> <div className='sta green' ></div>   {residenti?.status}  </div> 
+     ) }
+           else if (residenti?.status === 'Dead') {
+            return( <div className='status'> <div className='sta red' ></div>   {residenti?.status}  </div> 
+    )}
+           else {
+            return(  <div className='status'> <div className='sta unknow' ></div>   {residenti?.status}  </div> 
+    )} 
+
+            })()}
+
+           
             <li className='li'> <h2>{residenti?.name}</h2> </li>
             <hr />
-            <li className='li'>RAZA: {residenti?.species} </li>
+            <li className='li'> <b> RAZA: </b>{residenti?.species} </li>
 
-            <li className='li'>ORIGEN: {residenti?.origin.name} </li>
+            <li className='li'> <b>ORIGEN: </b>{residenti?.origin.name} </li>
 
-            <li className='li'>APARICION EN EPISODIOS: {residenti?.episode.length}</li>
+            <li className='li'><b>APARICION EN EPISODIOS:</b> {residenti?.episode.length}</li>
 
     </ul> 
         </article>
